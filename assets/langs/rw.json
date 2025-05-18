@@ -1,0 +1,33 @@
+{
+    "app_title": "CungaCash",
+    "summary": "Incamake y’Imari",
+        "welcome": "Murakaza neza",
+        "login": "Injira",
+        "signup": "Iyandikishe",
+        "logout": "Sohoka",
+        "email": "Imeyili",
+        "password": "Ijambobanga",
+        "confirm_password": "Emeza ijambobanga",
+        "forgot_password": "Wibagiwe ijambobanga?",
+        "home": "Ahabanza",
+        "add_transaction": "Ongeramo Ikoreshwa",
+        "transaction_list": "Urutonde rw'Ibyakozwe",
+        "financial_summary": "Incamake y’Imari",
+        "income": "Injiza",
+        "expense": "Ikoreshwa",
+        "total_income": "💰 Injiza Yose",
+        "total_expenses": "💸 Ibyakoreshwa Byose",
+        "balance": "💲 Umusaruro",
+        "enter_amount": "Andika amafaranga",
+        "enter_description": "Andika ibisobanuro",
+        "save": "Bika",
+        "cancel": "Hagarika",
+        "type": "Ubwoko",
+        "date": "Itariki",
+        "no_transactions": "Nta bikorwa by’imari byongeweho kugeza ubu!",
+                "welcome_title": "CungaCash — Porogaramu yo gucunga neza amafaranga",
+                "welcome_description": "App yo kugufasha gucunga no kubika amafaranga yawe neza!",
+                "developer_info": "Uwakoze: SERGE MUNEZA"          
+
+  }
+  

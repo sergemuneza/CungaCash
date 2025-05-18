@@ -21,7 +21,8 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
   @override
   Widget build(BuildContext context) {
     final transactionProvider = Provider.of<TransactionProvider>(context);
-    List<Transaction> transactions = List.from(transactionProvider.transactions); // ✅ Create a modifiable copy
+    List<Transaction> transactions = List.from(
+        transactionProvider.transactions); // ✅ Create a modifiable copy
 
     // ✅ Apply Filters
     if (_selectedCategory != 'All') {
@@ -36,23 +37,21 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
       }).toList();
     }
 
-
 // ✅ Apply Sorting
-switch (_sortOption) {
-  case 'Newest First':
-    transactions.sort((a, b) => b.date.compareTo(a.date));
-    break;
-  case 'Oldest First':
-    transactions.sort((a, b) => a.date.compareTo(b.date));
-    break;
-  case 'Highest Amount':
-    transactions.sort((a, b) => b.amount.compareTo(a.amount));
-    break;
-  case 'Lowest Amount':
-    transactions.sort((a, b) => a.amount.compareTo(b.amount));
-    break;
-}
-
+    switch (_sortOption) {
+      case 'Newest First':
+        transactions.sort((a, b) => b.date.compareTo(a.date));
+        break;
+      case 'Oldest First':
+        transactions.sort((a, b) => a.date.compareTo(b.date));
+        break;
+      case 'Highest Amount':
+        transactions.sort((a, b) => b.amount.compareTo(a.amount));
+        break;
+      case 'Lowest Amount':
+        transactions.sort((a, b) => a.amount.compareTo(b.amount));
+        break;
+    }
 
     return Scaffold(
       appBar: AppBar(title: const Text("Transactions")),
@@ -127,7 +126,7 @@ switch (_sortOption) {
                       return ListTile(
                         title: Text(transaction.category),
                         subtitle: Text(
-                          "${transaction.type.capitalize()} • \$${transaction.amount.toStringAsFixed(2)} • $formattedDate",
+                          "${transaction.type.capitalize()} • ${transaction.amount.toStringAsFixed(2)} \Frw •  $formattedDate",
                         ),
                         trailing: IconButton(
                           icon:
@@ -176,21 +175,20 @@ switch (_sortOption) {
   }
 
   @override
-void initState() {
-  super.initState();
-  _loadTransactions();
-}
+  void initState() {
+    super.initState();
+    _loadTransactions();
+  }
 
-/// Fetch transactions when screen loads
-void _loadTransactions() async {
-  final transactionProvider = Provider.of<TransactionProvider>(context, listen: false);
-  await transactionProvider.fetchTransactions();
-}
-
+  /// Fetch transactions when screen loads
+  void _loadTransactions() async {
+    final transactionProvider =
+        Provider.of<TransactionProvider>(context, listen: false);
+    await transactionProvider.fetchTransactions();
+  }
 }
 
 // ✅ Extension to Capitalize First Letter
 extension StringCapitalizeExt on String {
   String capitalizeFirstLetter() => this[0].toUpperCase() + substring(1);
 }
-
