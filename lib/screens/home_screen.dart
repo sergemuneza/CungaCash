@@ -61,11 +61,13 @@
 //       ),
 //     );
 //   }
-// }
+// } 
 
+import 'package:expense_tracker_pro/screens/saving_goal_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/auth_provider.dart';
+
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -129,6 +131,18 @@ class HomeScreen extends StatelessWidget {
                     onTap: () => Navigator.pushNamed(context, '/financial-summary'),
                   ),
                   const SizedBox(height: 20),
+
+                  //buton new
+                  _buildButton(
+                  context: context,
+                  label: "Manage Saving Goals",
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => SavingGoalScreen()),
+                  ),
+                ),
+                const SizedBox(height: 15),
+
 
                   // ✅ Logout Button
                   TextButton.icon(

@@ -172,6 +172,7 @@
 //     );
 //   }
 // }
+import 'package:expense_tracker_pro/providers/saving_goal_provider.dart';
 import 'package:expense_tracker_pro/screens/financial_summary_screen.dart';
 import 'package:expense_tracker_pro/screens/transaction_list_screen.dart';
 import 'package:expense_tracker_pro/screens/welcome_screen.dart';
@@ -207,6 +208,7 @@ void main() async {
         providers: [
           ChangeNotifierProvider(create: (context) => authProvider),
           ChangeNotifierProvider(create: (context) => TransactionProvider()),
+          ChangeNotifierProvider(create: (_) => SavingGoalProvider()),
         ],
         child: MyApp(isAuthenticated: authProvider.isAuthenticated),
       ),

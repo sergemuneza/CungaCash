@@ -193,6 +193,8 @@ dependencies:
 
   cupertino_icons: ^1.0.8
 
+  collection: ^1.18.0
+
   # State Management
   provider: ^6.0.5
 
