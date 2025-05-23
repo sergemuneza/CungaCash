@@ -233,18 +233,42 @@ class HomeScreen extends StatelessWidget {
     final authProvider = Provider.of<AuthProvider>(context);
     final user = authProvider.currentUser;
 
+    // return Scaffold(
+    //   extendBodyBehindAppBar: true,
+    //   body: Stack(
+    //     fit: StackFit.expand,
+    //     children: [
+    //       Image.asset(
+    //         "assets/images/background.jpg",
+    //         fit: BoxFit.cover,
+    //       ),
+    //       Container(
+    //         color: Colors.black.withOpacity(0.6),
+    //       ),
     return Scaffold(
-      extendBodyBehindAppBar: true,
-      body: Stack(
-        fit: StackFit.expand,
-        children: [
-          Image.asset(
-            "assets/images/background.jpg",
-            fit: BoxFit.cover,
-          ),
-          Container(
-            color: Colors.black.withOpacity(0.6),
-          ),
+  extendBodyBehindAppBar: true,
+  appBar: AppBar(
+    backgroundColor: Colors.transparent,
+    elevation: 0,
+    actions: [
+      IconButton(
+        icon: Icon(Icons.settings),
+        onPressed: () {
+          Navigator.pushNamed(context, '/settings');
+        },
+      ),
+    ],
+  ),
+  body: Stack(
+    fit: StackFit.expand,
+    children: [
+      Image.asset(
+        "assets/images/background.jpg",
+        fit: BoxFit.cover,
+      ),
+      Container(
+        color: Colors.black.withOpacity(0.6),
+      ),
           SafeArea(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),

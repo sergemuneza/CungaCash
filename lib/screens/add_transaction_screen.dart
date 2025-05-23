@@ -1218,132 +1218,132 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
               ),
               const SizedBox(height: 16),
 
-              // ✅ Show budget info for expense transactions
-              if (_selectedType == 'expense' && budgets.isNotEmpty) ...[
-                Consumer<BudgetProvider>(
-                  builder: (context, budgetProvider, child) {
-                    // Find matching budget for the selected category
-                    Budget? matchingBudget;
-                    try {
-                      matchingBudget = budgetProvider.budgets.firstWhere(
-                        (budget) => budget.category == _selectedCategory && budget.isActive,
-                      );
-                    } catch (e) {
-                      try {
-                        matchingBudget = budgetProvider.budgets.firstWhere(
-                          (budget) => budget.category == 'all' && budget.isActive,
-                        );
-                      } catch (e) {
-                        matchingBudget = null;
-                      }
-                    }
+              // // ✅ Show budget info for expense transactions
+              // if (_selectedType == 'expense' && budgets.isNotEmpty) ...[
+              //   Consumer<BudgetProvider>(
+              //     builder: (context, budgetProvider, child) {
+              //       // Find matching budget for the selected category
+              //       Budget? matchingBudget;
+              //       try {
+              //         matchingBudget = budgetProvider.budgets.firstWhere(
+              //           (budget) => budget.category == _selectedCategory && budget.isActive,
+              //         );
+              //       } catch (e) {
+              //         try {
+              //           matchingBudget = budgetProvider.budgets.firstWhere(
+              //             (budget) => budget.category == 'all' && budget.isActive,
+              //           );
+              //         } catch (e) {
+              //           matchingBudget = null;
+              //         }
+              //       }
 
-                    if (matchingBudget != null) {
-                      final remainingPercentage = (matchingBudget.remaining / matchingBudget.amount) * 100;
-                      final isLowBudget = remainingPercentage < 20;
+              //       if (matchingBudget != null) {
+              //         final remainingPercentage = (matchingBudget.remaining / matchingBudget.amount) * 100;
+              //         final isLowBudget = remainingPercentage < 20;
                       
-                      return Container(
-                        padding: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          color: isLowBudget ? Colors.red.shade50 : Colors.blue.shade50,
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(
-                            color: isLowBudget ? Colors.red.shade200 : Colors.blue.shade200,
-                          ),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Icon(
-                                  Icons.account_balance_wallet,
-                                  color: isLowBudget ? Colors.red.shade700 : Colors.blue.shade700,
-                                ),
-                                const SizedBox(width: 8),
-                                Text(
-                                  'Budget: ${matchingBudget.name}',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: isLowBudget ? Colors.red.shade700 : Colors.blue.shade700,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 8),
-                            Text(
-                              'Remaining: RWF ${NumberFormat('#,##0.00').format(matchingBudget.remaining)}',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                                color: isLowBudget ? Colors.red.shade800 : Colors.blue.shade800,
-                              ),
-                            ),
-                            const SizedBox(height: 4),
-                            LinearProgressIndicator(
-                              value: remainingPercentage / 100,
-                              backgroundColor: Colors.grey.shade300,
-                              valueColor: AlwaysStoppedAnimation<Color>(
-                                isLowBudget ? Colors.red : Colors.blue,
-                              ),
-                            ),
-                            const SizedBox(height: 4),
-                            Text(
-                              '${remainingPercentage.toStringAsFixed(1)}% remaining',
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: isLowBudget ? Colors.red.shade600 : Colors.blue.shade600,
-                              ),
-                            ),
-                            if (isLowBudget) ...[
-                              const SizedBox(height: 8),
-                              Row(
-                                children: [
-                                  Icon(Icons.warning, color: Colors.red.shade600, size: 16),
-                                  const SizedBox(width: 4),
-                                  Text(
-                                    'Low budget remaining!',
-                                    style: TextStyle(
-                                      color: Colors.red.shade600,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 12,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ],
-                        ),
-                      );
-                    } else {
-                      return Container(
-                        padding: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          color: Colors.orange.shade50,
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(color: Colors.orange.shade200),
-                        ),
-                        child: Row(
-                          children: [
-                            Icon(Icons.info, color: Colors.orange.shade700),
-                            const SizedBox(width: 8),
-                            Expanded(
-                              child: Text(
-                                'No budget found for this category. Consider creating one!',
-                                style: TextStyle(
-                                  color: Colors.orange.shade700,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
-                    }
-                  },
-                ),
-                const SizedBox(height: 16),
-              ],
+              //         return Container(
+              //           padding: const EdgeInsets.all(16),
+              //           decoration: BoxDecoration(
+              //             color: isLowBudget ? Colors.red.shade50 : Colors.blue.shade50,
+              //             borderRadius: BorderRadius.circular(8),
+              //             border: Border.all(
+              //               color: isLowBudget ? Colors.red.shade200 : Colors.blue.shade200,
+              //             ),
+              //           ),
+              //           child: Column(
+              //             crossAxisAlignment: CrossAxisAlignment.start,
+              //             children: [
+              //               Row(
+              //                 children: [
+              //                   Icon(
+              //                     Icons.account_balance_wallet,
+              //                     color: isLowBudget ? Colors.red.shade700 : Colors.blue.shade700,
+              //                   ),
+              //                   const SizedBox(width: 8),
+              //                   Text(
+              //                     'Budget: ${matchingBudget.name}',
+              //                     style: TextStyle(
+              //                       fontWeight: FontWeight.bold,
+              //                       color: isLowBudget ? Colors.red.shade700 : Colors.blue.shade700,
+              //                     ),
+              //                   ),
+              //                 ],
+              //               ),
+              //               const SizedBox(height: 8),
+              //               Text(
+              //                 'Remaining: RWF ${NumberFormat('#,##0.00').format(matchingBudget.remaining)}',
+              //                 style: TextStyle(
+              //                   fontSize: 16,
+              //                   fontWeight: FontWeight.w600,
+              //                   color: isLowBudget ? Colors.red.shade800 : Colors.blue.shade800,
+              //                 ),
+              //               ),
+              //               const SizedBox(height: 4),
+              //               LinearProgressIndicator(
+              //                 value: remainingPercentage / 100,
+              //                 backgroundColor: Colors.grey.shade300,
+              //                 valueColor: AlwaysStoppedAnimation<Color>(
+              //                   isLowBudget ? Colors.red : Colors.blue,
+              //                 ),
+              //               ),
+              //               const SizedBox(height: 4),
+              //               Text(
+              //                 '${remainingPercentage.toStringAsFixed(1)}% remaining',
+              //                 style: TextStyle(
+              //                   fontSize: 12,
+              //                   color: isLowBudget ? Colors.red.shade600 : Colors.blue.shade600,
+              //                 ),
+              //               ),
+              //               if (isLowBudget) ...[
+              //                 const SizedBox(height: 8),
+              //                 Row(
+              //                   children: [
+              //                     Icon(Icons.warning, color: Colors.red.shade600, size: 16),
+              //                     const SizedBox(width: 4),
+              //                     Text(
+              //                       'Low budget remaining!',
+              //                       style: TextStyle(
+              //                         color: Colors.red.shade600,
+              //                         fontWeight: FontWeight.w500,
+              //                         fontSize: 12,
+              //                       ),
+              //                     ),
+              //                   ],
+              //                 ),
+              //               ],
+              //             ],
+              //           ),
+              //         );
+              //       } else {
+              //         return Container(
+              //           padding: const EdgeInsets.all(16),
+              //           decoration: BoxDecoration(
+              //             color: Colors.orange.shade50,
+              //             borderRadius: BorderRadius.circular(8),
+              //             border: Border.all(color: Colors.orange.shade200),
+              //           ),
+              //           child: Row(
+              //             children: [
+              //               Icon(Icons.info, color: Colors.orange.shade700),
+              //               const SizedBox(width: 8),
+              //               Expanded(
+              //                 child: Text(
+              //                   'No budget found for this category. Consider creating one!',
+              //                   style: TextStyle(
+              //                     color: Colors.orange.shade700,
+              //                     fontWeight: FontWeight.w500,
+              //                   ),
+              //                 ),
+              //               ),
+              //             ],
+              //           ),
+              //         );
+              //       }
+              //     },
+              //   ),
+              //   const SizedBox(height: 16),
+              // ],
 
               if (goals.isNotEmpty && _selectedType == 'income') ...[
                 DropdownButtonFormField<int>(

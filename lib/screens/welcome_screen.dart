@@ -534,7 +534,7 @@ class WelcomeScreen extends StatelessWidget {
                       const SizedBox(height: 5),
 
                       Text(
-                        "welcome_title".tr(),
+                        "CungaCash — Smart Personal Finance Manager App".tr(),
                         textAlign: TextAlign.center,
                         style: const TextStyle(
                           fontSize: 20,
@@ -547,15 +547,18 @@ class WelcomeScreen extends StatelessWidget {
                       const SizedBox(height: 20),
 
                       Text(
-                        "welcome_description".tr(),
+                        "An app that help you to manage and track your finance effectively!"
+                            .tr(),
                         textAlign: TextAlign.center,
-                        style: const TextStyle(fontSize: 16, color: Colors.white70),
+                        style: const TextStyle(
+                            fontSize: 16, color: Colors.white70),
                       ),
 
                       const SizedBox(height: 30),
 
                       Text(
-                        "developer_info".tr(),
+                        "Developed by "
+                        "SERGE MUNEZA".tr(),
                         style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
@@ -569,7 +572,8 @@ class WelcomeScreen extends StatelessWidget {
                         onTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => LoginScreen()),
+                            MaterialPageRoute(
+                                builder: (context) => LoginScreen()),
                           );
                         },
                       ),
@@ -579,7 +583,8 @@ class WelcomeScreen extends StatelessWidget {
                         onTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => SignupScreen()),
+                            MaterialPageRoute(
+                                builder: (context) => SignupScreen()),
                           );
                         },
                       ),
@@ -596,7 +601,8 @@ class WelcomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildAnimatedButton({required String text, required VoidCallback onTap}) {
+  Widget _buildAnimatedButton(
+      {required String text, required VoidCallback onTap}) {
     return TweenAnimationBuilder(
       duration: const Duration(milliseconds: 800),
       tween: Tween<double>(begin: 0, end: 1),
@@ -614,12 +620,14 @@ class WelcomeScreen extends StatelessWidget {
           backgroundColor: Colors.white,
           padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 14),
           elevation: 5,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
         ),
         onPressed: onTap,
         child: Text(
           text,
-          style: const TextStyle(color: Colors.blue, fontSize: 18, fontWeight: FontWeight.bold),
+          style: const TextStyle(
+              color: Colors.blue, fontSize: 18, fontWeight: FontWeight.bold),
         ),
       ),
     );
