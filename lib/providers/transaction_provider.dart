@@ -186,4 +186,9 @@ class TransactionProvider with ChangeNotifier {
   double get currentBalance {
     return totalIncome - totalExpenses;
   }
+
+  // Optional: Get transactions within a category for budget tracking
+List<Transaction> getTransactionsByCategory(String category) {
+  return _transactions.where((t) => t.category == category).toList();
+}
 }

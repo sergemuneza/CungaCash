@@ -152,7 +152,7 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
 
               DropdownButtonFormField<String>(
                 value: _selectedCategory,
-                items: ['Groceries', 'Utilities', 'Entertainment', 'Salary', 'Other' , 'Gift' , 'Business' , 'Transport'].map((category) {
+                items: ['Groceries', 'Utilities', 'Entertainment', 'Salary', 'Other' , 'Gift' , 'Business' , 'Transport' , 'Healthcare'].map((category) {
                   return DropdownMenuItem(value: category, child: Text(category));
                 }).toList(),
                 onChanged: (value) => setState(() => _selectedCategory = value ?? _selectedCategory),
