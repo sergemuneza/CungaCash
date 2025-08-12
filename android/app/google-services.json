@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1007469700131",
+    "project_id": "cungacash",
+    "storage_bucket": "cungacash.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1007469700131:android:672797d90d9870c8607d96",
+        "android_client_info": {
+          "package_name": "com.example.cungacash"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCd91CRnenydlh3PXKs5zP9JAfnVshtDuc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

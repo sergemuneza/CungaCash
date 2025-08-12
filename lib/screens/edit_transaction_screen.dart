@@ -1,6 +1,8 @@
+//edit transaction screen
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
+import 'package:easy_localization/easy_localization.dart';
 import '../providers/transaction_provider.dart';
 import '../models/transaction.dart';
 
@@ -47,7 +49,7 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
     Provider.of<TransactionProvider>(context, listen: false).updateTransaction(updatedTransaction);
 
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text("Transaction updated successfully!")),
+      SnackBar(content: Text("updated_success".tr())),
     );
 
     Navigator.pop(context);
@@ -57,19 +59,19 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text("Confirm Update"),
-        content: const Text("Are you sure you want to update this transaction?"),
+        title: Text("confirm_update".tr()),
+        content: Text("update_question".tr()),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: const Text("Cancel"),
+            child: Text("cancel".tr()),
           ),
           TextButton(
             onPressed: () {
               Navigator.pop(ctx);
               _updateTransaction();
             },
-            child: const Text("Update"),
+            child: Text("update".tr()),
           ),
         ],
       ),
@@ -80,12 +82,12 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text("Confirm Delete"),
-        content: const Text("Are you sure you want to delete this transaction?"),
+        title: Text("confirm_delete".tr()),
+        content: Text("delete_question".tr()),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: const Text("Cancel"),
+            child: Text("cancel".tr()),
           ),
           TextButton(
             onPressed: () {
@@ -96,10 +98,10 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
               Navigator.pop(context);
 
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text("Transaction deleted!")),
+                SnackBar(content: Text("deleted_success".tr())),
               );
             },
-            child: const Text("Delete", style: TextStyle(color: Colors.red)),
+            child: Text("delete".tr(), style: const TextStyle(color: Colors.red)),
           ),
         ],
       ),
@@ -121,7 +123,7 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Edit Transaction")),
+      appBar: AppBar(title: Text("edit_transaction".tr())),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -131,20 +133,23 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
               DropdownButtonFormField<String>(
                 value: _selectedType,
                 items: ['income', 'expense'].map((type) {
-                  return DropdownMenuItem(value: type, child: Text(type.capitalize()));
+                  return DropdownMenuItem(
+                    value: type, 
+                    child: Text(type.tr())
+                  );
                 }).toList(),
                 onChanged: (value) => setState(() => _selectedType = value ?? _selectedType),
-                decoration: const InputDecoration(labelText: "Transaction Type"),
+                decoration: InputDecoration(labelText: "transaction_type".tr()),
               ),
               const SizedBox(height: 10),
 
               TextFormField(
                 controller: _amountController,
-                decoration: const InputDecoration(labelText: "Amount"),
+                decoration: InputDecoration(labelText: "amount".tr()),
                 keyboardType: TextInputType.number,
                 validator: (value) {
-                  if (value == null || value.isEmpty) return "Amount is required";
-                  if (double.tryParse(value) == null) return "Enter a valid number";
+                  if (value == null || value.isEmpty) return "amount_required".tr();
+                  if (double.tryParse(value) == null) return "amount_invalid".tr();
                   return null;
                 },
               ),
@@ -152,29 +157,41 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
 
               DropdownButtonFormField<String>(
                 value: _selectedCategory,
-                items: ['Groceries', 'Utilities', 'Entertainment', 'Salary', 'Other' , 'Gift' , 'Business' , 'Transport' , 'Healthcare'].map((category) {
-                  return DropdownMenuItem(value: category, child: Text(category));
+                items: ['groceries', 'utilities', 'entertainment', 'salary', 'other', 'gift', 'business', 'transport', 'healthcare', 'freelance' , 'Shopping' , 'Bills','Investment'].map((category) {
+                  return DropdownMenuItem(
+                    value: category.toLowerCase() == 'groceries' ? 'Groceries' :
+                           category.toLowerCase() == 'utilities' ? 'Utilities' :
+                           category.toLowerCase() == 'entertainment' ? 'Entertainment' :
+                           category.toLowerCase() == 'salary' ? 'Salary' :
+                           category.toLowerCase() == 'other' ? 'Other' :
+                           category.toLowerCase() == 'gift' ? 'Gift' :
+                           category.toLowerCase() == 'business' ? 'Business' :
+                           category.toLowerCase() == 'transport' ? 'Transport' :
+                           category.toLowerCase() == 'healthcare' ? 'Healthcare' :
+                           category.toLowerCase() == 'freelance' ? 'Freelance' : category,
+                    child: Text(category.tr())
+                  );
                 }).toList(),
                 onChanged: (value) => setState(() => _selectedCategory = value ?? _selectedCategory),
-                decoration: const InputDecoration(labelText: "Category"),
+                decoration: InputDecoration(labelText: "category".tr()),
               ),
               const SizedBox(height: 10),
 
               TextFormField(
                 controller: _descriptionController,
-                decoration: const InputDecoration(labelText: "Description"),
+                decoration: InputDecoration(labelText: "description".tr()),
                 maxLines: 2,
               ),
               const SizedBox(height: 10),
 
               Row(
                 children: [
-                  Text("Date: ${DateFormat.yMMMd().format(_selectedDate)}",
+                  Text("${"date".tr()}: ${DateFormat.yMMMd().format(_selectedDate)}",
                       style: const TextStyle(fontSize: 16)),
                   const Spacer(),
                   TextButton(
                     onPressed: () => _selectDate(context),
-                    child: const Text("Choose Date"),
+                    child: Text("choose_date".tr()),
                   ),
                 ],
               ),
@@ -182,13 +199,13 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
 
               ElevatedButton(
                 onPressed: _confirmUpdate,
-                child: const Text("Update Transaction"),
+                child: Text("update_transaction".tr()),
               ),
               const SizedBox(height: 10),
 
               TextButton(
                 onPressed: _deleteTransaction,
-                child: const Text("Delete Transaction", style: TextStyle(color: Colors.red)),
+                child: Text("delete_transaction".tr(), style: const TextStyle(color: Colors.red)),
               ),
             ],
           ),
@@ -196,8 +213,11 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
       ),
     );
   }
-}
 
-extension StringExtension on String {
-  String capitalize() => "${this[0].toUpperCase()}${substring(1)}";
+  @override
+  void dispose() {
+    _amountController.dispose();
+    _descriptionController.dispose();
+    super.dispose();
+  }
 }

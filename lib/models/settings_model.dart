@@ -1,3 +1,5 @@
+//Setting Model
+
 import 'package:flutter/material.dart';
 
 class SettingsModel {

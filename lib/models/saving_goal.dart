@@ -1,45 +1,5 @@
-// class SavingGoal {
-//   final String id;
-//   final String title;
-//   final double targetAmount;
-//   final double savedAmount;
-//   final DateTime deadline;
+//Savings Model
 
-//   SavingGoal({
-//     required this.id,
-//     required this.title,
-//     required this.targetAmount,
-//     required this.savedAmount,
-//     required this.deadline,
-//   });
-
-//   // 🔁 Convert class instance to map (for DB or API)
-//   Map<String, dynamic> toMap() => {
-//         'id': id,
-//         'title': title,
-//         'targetAmount': targetAmount,
-//         'savedAmount': savedAmount,
-//         'deadline': deadline.toIso8601String(),
-//       };
-
-//   // 🔁 Create instance from map (e.g. from DB or API)
-//   factory SavingGoal.fromMap(Map<String, dynamic> map) => SavingGoal(
-//         id: map['id'],
-//         title: map['title'],
-//         targetAmount: (map['targetAmount'] as num).toDouble(),
-//         savedAmount: (map['savedAmount'] as num).toDouble(),
-//         deadline: DateTime.parse(map['deadline']),
-//       );
-
-//   // ✅ Getter for remaining amount
-//   double get remainingAmount => targetAmount - savedAmount;
-
-//   // ✅ Getter for progress percentage (0.0 - 1.0)
-//   double get progress => (targetAmount == 0) ? 0 : (savedAmount / targetAmount);
-
-//   // ✅ Optionally, readable string for UI
-//   String get formattedDeadline => "${deadline.day}/${deadline.month}/${deadline.year}";
-// }
 class SavingGoal {
   final int? id; // Nullable int instead of required String
   final String title;

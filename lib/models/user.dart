@@ -1,3 +1,5 @@
+//User Model
+
 class User {
   String id;
   String email;

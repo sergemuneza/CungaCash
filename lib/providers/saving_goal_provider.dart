@@ -1,37 +1,4 @@
-// import 'package:flutter/material.dart';
-// import 'package:collection/collection.dart'; // ✅ Added to use firstWhereOrNull
-// import '../models/saving_goal.dart';
-
-// class SavingGoalProvider with ChangeNotifier {
-//   final List<SavingGoal> _goals = [];
-
-//   List<SavingGoal> get savingGoals => List.unmodifiable(_goals);
-
-//   void addGoal(SavingGoal goal) {
-//     _goals.add(goal);
-//     notifyListeners();
-//   }
-
-//   void updateGoalProgress(String goalId, double amount) {
-//     final index = _goals.indexWhere((g) => g.id == goalId);
-//     if (index != -1) {
-//       final oldGoal = _goals[index];
-//       final updatedGoal = SavingGoal(
-//         id: oldGoal.id,
-//         title: oldGoal.title,
-//         targetAmount: oldGoal.targetAmount,
-//         savedAmount: oldGoal.savedAmount + amount,
-//         deadline: oldGoal.deadline,
-//       );
-//       _goals[index] = updatedGoal;
-//       notifyListeners();
-//     }
-//   }
-
-//   SavingGoal? getGoalById(String id) {
-//     return _goals.firstWhereOrNull((g) => g.id == id); // ✅ Fix: no type mismatch
-//   }
-// }
+//Goal Provider
 import 'package:flutter/material.dart';
 import '../models/saving_goal.dart';
 import '../services/db_helper.dart';
@@ -78,7 +45,7 @@ class SavingGoalProvider extends ChangeNotifier {
     }
   }
 
-  // ✅ Update goal progress when linked transaction is added
+  // Update goal progress when linked transaction is added
   Future<void> updateGoalProgress(String goalId, double amount) async {
     try {
       final goalIdInt = int.parse(goalId);
@@ -111,7 +78,7 @@ class SavingGoalProvider extends ChangeNotifier {
     }
   }
 
-  // ✅ Get progress percentage for a goal
+  // Get progress percentage for a goal
   double getGoalProgress(int goalId) {
     final goal = _savingGoals.firstWhere(
       (g) => g.id == goalId,
@@ -126,12 +93,12 @@ class SavingGoalProvider extends ChangeNotifier {
     return goal.savedAmount / goal.targetAmount;
   }
 
-  // ✅ Check if goal is completed
+  // Check if goal is completed
   bool isGoalCompleted(int goalId) {
     return getGoalProgress(goalId) >= 1.0;
   }
 
-  // ✅ Get remaining amount for goal
+  // Get remaining amount for goal
   double getRemainingAmount(int goalId) {
     final goal = _savingGoals.firstWhere(
       (g) => g.id == goalId,

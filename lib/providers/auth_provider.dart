@@ -1,72 +1,4 @@
-// import 'package:flutter/foundation.dart';
-// import '../services/auth_service.dart';
-
-// class AuthProvider with ChangeNotifier {
-//   String? _userEmail;
-//   String? _firstName;
-//   bool _isAuthenticated = false;
-
-//   String? get userEmail => _userEmail;
-//   String? get firstName => _firstName;
-//   bool get isAuthenticated => _isAuthenticated;
-
-//   get user => null;
-
-//   /// Login user
-//   Future<bool> login(String email, String password) async {
-//     final authService = AuthService();
-//     bool isSuccess = await authService.loginUser(email, password);
-
-//     if (isSuccess) {
-//       final user = await authService.getUserDetails(email);
-//       if (user != null) {
-//         _userEmail = email;
-//         _firstName = user['first_name'];
-//         _isAuthenticated = true;
-//         notifyListeners();
-//       }
-//     }
-//     return isSuccess;
-//   }
-
-//   /// Logout user
-//   Future<void> logout() async {
-//     await AuthService().logoutUser();
-//     _userEmail = null;
-//     _firstName = null;
-//     _isAuthenticated = false;
-//     notifyListeners();
-//   }
-
-//   /// Check if user is already logged in
-// Future<void> checkAuthStatus() async {
-//   final authService = AuthService();
-//   final savedCredentials = await authService.getUserCredentials();
-
-//   if (savedCredentials['email'] != null && savedCredentials['email']!.isNotEmpty) {
-//     final user = await authService.getUserDetails(savedCredentials['email']!);
-
-//     if (user != null) {
-//       _userEmail = savedCredentials['email'];
-//       _firstName = user['first_name'];
-//       _isAuthenticated = true;
-//       notifyListeners();
-//       return;
-//     }
-//   }
-//   _clearUserData(); // Reset state if user is not logged in
-// }
-
-// /// Clears user session
-// void _clearUserData() {
-//   _userEmail = null;
-//   _firstName = null;
-//   _isAuthenticated = false;
-//   notifyListeners();
-// }
-
-// }
-
+//Auth Provider
 import 'package:flutter/material.dart';
 import '../models/user.dart'; // Adjust the path if needed
 import '../services/auth_service.dart';
@@ -74,54 +6,129 @@ import '../services/auth_service.dart';
 class AuthProvider with ChangeNotifier {
   User? _currentUser;
   bool _isAuthenticated = false;
+  String? _errorMessage;
 
   User? get currentUser => _currentUser;
   bool get isAuthenticated => _isAuthenticated;
+  String? get errorMessage => _errorMessage;
+
+  /// Clear error message
+  void clearError() {
+    _errorMessage = null;
+    notifyListeners();
+  }
 
   /// Login user
   Future<bool> login(String email, String password) async {
-    final authService = AuthService();
-    final success = await authService.loginUser(email, password);
+    try {
+      _errorMessage = null;
+      final authService = AuthService();
+      final success = await authService.loginUser(email, password);
 
-    if (success) {
-      final userMap = await authService.getUserDetails(email);
-      if (userMap != null) {
-        _currentUser = User.fromMap(userMap);
-        _isAuthenticated = true;
-        notifyListeners();
-        return true;
+      if (success) {
+        final userMap = await authService.getUserDetails(email);
+        if (userMap != null) {
+          _currentUser = User.fromMap(userMap);
+          _isAuthenticated = true;
+          print("AuthProvider: Login successful for ${_currentUser?.email}");
+          notifyListeners();
+          return true;
+        } else {
+          _errorMessage = "Failed to retrieve user details";
+          print(" AuthProvider: Failed to get user details");
+        }
+      } else {
+        _errorMessage = "Invalid email or password";
+        print(" AuthProvider: Login failed - invalid credentials");
       }
-    }
 
-    return false;
+      _isAuthenticated = false;
+      _currentUser = null;
+      notifyListeners();
+      return false;
+    } catch (e) {
+      _errorMessage = "Login error: $e";
+      print(" AuthProvider: Login error - $e");
+      _isAuthenticated = false;
+      _currentUser = null;
+      notifyListeners();
+      return false;
+    }
+  }
+
+  /// Register user
+  Future<bool> register(String firstName, String lastName, String email, String password) async {
+    try {
+      _errorMessage = null;
+      final authService = AuthService();
+      final success = await authService.registerUser(firstName, lastName, email, password);
+
+      if (success) {
+        print(" AuthProvider: Registration successful for $email");
+        // Automatically log in after registration
+        return await login(email, password);
+      } else {
+        _errorMessage = "Registration failed - user may already exist";
+        print(" AuthProvider: Registration failed for $email");
+      }
+
+      notifyListeners();
+      return false;
+    } catch (e) {
+      _errorMessage = "Registration error: $e";
+      print(" AuthProvider: Registration error - $e");
+      notifyListeners();
+      return false;
+    }
   }
 
   /// Logout
   Future<void> logout() async {
-    await AuthService().logoutUser();
-    _currentUser = null;
-    _isAuthenticated = false;
-    notifyListeners();
+    try {
+      await AuthService().logoutUser();
+      _currentUser = null;
+      _isAuthenticated = false;
+      _errorMessage = null;
+      print(" AuthProvider: Logout successful");
+      notifyListeners();
+    } catch (e) {
+      print(" AuthProvider: Logout error - $e");
+    }
   }
 
   /// Check login status on app launch
   Future<void> checkAuthStatus() async {
-    final authService = AuthService();
-    final credentials = await authService.getUserCredentials();
+    try {
+      print(" AuthProvider: Checking authentication status...");
+      final authService = AuthService();
+      final credentials = await authService.getUserCredentials();
 
-    final email = credentials['email'];
-    if (email != null && email.isNotEmpty) {
-      final userMap = await authService.getUserDetails(email);
-      if (userMap != null) {
-        _currentUser = User.fromMap(userMap);
-        _isAuthenticated = true;
-        notifyListeners();
-        return;
+      final email = credentials['email'];
+      if (email != null && email.isNotEmpty) {
+        print("🔍 AuthProvider: Found saved email: $email");
+        final userMap = await authService.getUserDetails(email);
+        if (userMap != null) {
+          _currentUser = User.fromMap(userMap);
+          _isAuthenticated = true;
+          print(" AuthProvider: Auto-login successful for $email");
+          notifyListeners();
+          return;
+        } else {
+          print(" AuthProvider: User details not found for saved email");
+        }
+      } else {
+        print(" AuthProvider: No saved email found");
       }
-    }
 
-    _currentUser = null;
-    _isAuthenticated = false;
-    notifyListeners();
+      _currentUser = null;
+      _isAuthenticated = false;
+      print(" AuthProvider: No valid authentication found");
+      notifyListeners();
+    } catch (e) {
+      print(" AuthProvider: Error checking auth status - $e");
+      _currentUser = null;
+      _isAuthenticated = false;
+      notifyListeners();
+    }
   }
 }
